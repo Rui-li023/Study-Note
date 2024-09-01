@@ -50,7 +50,35 @@ print(f'Welcome {username}, your score is {score:d}')
 
 返回的内容包含：`(part_before, sep, part_after)`
 
-#### `.translate()`
+#### `.join()`
+
+`join()` 是字符串方法，用于将一个可迭代对象（如列表、元组）中的元素连接成一个字符串，并在每个元素之间插入指定的字符串分隔符。
+
+##### 语法
+```python
+separator = " "
+result = separator.join(iterable)
+```
+
+- `separator`：分隔符字符串，决定元素之间的连接符。
+- `iterable`：可迭代对象，如列表、元组等，其中的元素必须是字符串类型。
+
+##### 示例
+
+1. **使用 `list` 作为参数**：
+   
+   ```python
+   words = ["hello", "world"]
+   result = " ".join(words)
+   print(result)  # 输出 "hello world"
+   ```
+   
+2. **使用自定义分隔符**：
+   ```python
+   words = ["2024", "08", "31"]
+   result = "-".join(words)
+   print(result)  # 输出 "2024-08-31"
+   ```
 
 
 
@@ -58,13 +86,19 @@ print(f'Welcome {username}, your score is {score:d}')
 
 ```python
 classmate = ['Tim','Nick','Alex']
-s = ['python', 'java', ['asp', 'php'], 'scheme']#多维数组
-classmates = ('Michael', 'Bob', 'Tracy')#tuple,无法改变的数组
-s = (1,)#消除歧义，是一个tuple
+s = ['python', 'java', ['asp', 'php'], 'scheme'] #多维数组
+classmates = ('Michael', 'Bob', 'Tracy')		#tuple,无法改变的数组
+s = (1,)								   #消除歧义，是一个tuple
 #tuple里面可以内嵌list，list的内容是可以改变的
 ```
 
-##### `dit`
+#### `list`
+
+使用字符串生成一个list，能够让每个字符成为一个元素。
+
+
+
+#### `dit`
 
 ```python
 #类似于map，key和value对应
@@ -76,9 +110,91 @@ d.get('Thomas', -1)  #如果不存在可以返回none，或者自己指定的val
 d.pop('Bob') #删除对应的value
 ```
 
+##### 字典合并
+
+在 Python 中，可以通过多种方法将两个字典合并为一个新的字典。以下是一些常见的合并字典的方法：
+
+###### 1. 使用 `update()` 方法
+`update()` 方法直接在原字典上进行修改，将另一个字典的键值对更新到原字典中。
+
+```python
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+dict1.update(dict2)
+print(dict1)  # 输出 {'a': 1, 'b': 3, 'c': 4}
+```
+
+###### 2. 使用 `**` 解包运算符（Python 3.5+）
+可以通过解包 `**` 将两个字典合并，并生成一个新的字典。
+
+```python
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+merged_dict = {**dict1, **dict2}
+print(merged_dict)  # 输出 {'a': 1, 'b': 3, 'c': 4}
+```
+
+###### 3. 使用 `dict()` 构造函数和解包
+与上面的方法类似，但使用 `dict()` 构造函数来创建新的字典。
+
+```python
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+merged_dict = dict(dict1, **dict2)
+print(merged_dict)  # 输出 {'a': 1, 'b': 3, 'c': 4}
+```
+
+###### 4. 使用 `|` 运算符（Python 3.9+）
+在 Python 3.9 及更高版本中，可以使用 `|` 运算符来合并两个字典，生成一个新的字典。
+
+```python
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+merged_dict = dict1 | dict2
+print(merged_dict)  # 输出 {'a': 1, 'b': 3, 'c': 4}
+```
+
+###### 5. 使用 `collections.ChainMap`（临时合并）
+`ChainMap` 允许将多个字典组合在一起，但不会真正合并字典，而是提供一个视图。
+
+```python
+from collections import ChainMap
+
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+merged_dict = ChainMap(dict1, dict2)
+print(dict(merged_dict))  # 输出 {'a': 1, 'b': 2, 'c': 4}
+```
+
+**注意**：`ChainMap` 是临时的，只提供字典的合并视图，不会创建新字典。
+
+###### 6. 使用字典推导式
+可以通过字典推导式遍历两个字典的键值对来合并。
+
+```python
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+merged_dict = {k: v for d in (dict1, dict2) for k, v in d.items()}
+print(merged_dict)  # 输出 {'a': 1, 'b': 3, 'c': 4}
+```
 
 
-#### 条件判断
+
+#### `collections`
+
+`collections` 是Python内建的一个集合模块，提供了许多有用的集合类和方法。
+
+可以把它理解为一个容器，里面提供Python标准内建容器 `dict`, `list` , `set` 和 `tuple` 的替代选择。
+
+
+
+#### `tuple`
+
+元组是**有序**且**不可更改**的集合。在Python中，元组使用圆括号 `()` 编写的。
+
+
+
+### 条件判断
 
 布尔值 `and`,`or`,`not`运算，`:`区分代码块
 
@@ -98,7 +214,7 @@ else:
 ### 循环
 
 ```python
-for i in range(5)#i为0-4
+for i in range(5):	#i为0-4
 ```
 
 
@@ -188,6 +304,58 @@ def person(name, age, *args, city, job):
 
 
 
+#### `*args, **kwargs `代表什么
+
+##### 1. `*args`
+`*args` 代表"任意数量的非关键字参数"。它允许你传递任意数量的参数给一个函数，这些参数会被作为一个元组接收。
+
+- **全称**：arguments
+- **用法示例**：
+
+```python
+def example_function(*args):
+    for arg in args:
+        print(arg)
+
+example_function(1, 2, 3)  # 输出 1, 2, 3
+```
+
+在这个例子中，`example_function` 可以接收任意数量的参数，并在内部使用它们。
+
+##### 2. `**kwargs`
+`**kwargs` 代表"任意数量的关键字参数"。它允许你传递任意数量的键值对参数给一个函数，这些参数会被作为一个字典接收。
+
+- **全称**：keyword arguments
+- **用法示例**：
+
+```python
+def example_function(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key} = {value}")
+
+example_function(a=1, b=2, c=3)  # 输出 a = 1, b = 2, c = 3
+```
+
+在这个例子中，`example_function` 可以接收任意数量的关键字参数，并在内部使用它们。
+
+
+
+### 错误
+
+- `IOError `：输入输出异常
+- `AttributeError` ：试图访问一个对象没有的属性
+- `ImportError` ：无法引入模块或包 / 对象
+- `IndentationError` ：代码缩进错误
+- `IndexError` ：下标索引超出边界
+- `KeyError` ：试图访问映射中不存在的键
+- `SyntaxError` ：Python语法错误
+- `NameErrir` ：未声明/初始化对象 (没有属性)
+- `TabError` ：Tab和空格混用
+- `ValueError` ：传入无效的参数
+- `OverflowError` ：数值运算超出最大限制
+
+
+
 ### 列表生成式
 
 ```python
@@ -201,7 +369,60 @@ def person(name, age, *args, city, job):
 
 
 
+### 关键字
+
+#### `is`和`==`的关系
+
+`Python` 中的对象包含三个要素：`id`、`type` 和 `value`。`is` 比较的是两个对象的 `id`。`==` 比较的是两个对象的 `value`。
+
+
+
+## 高级特性
+
+### 切片
+
+```python
+L[0:3] #取前三个元素
+L[:3] 	#如果是0可以省略
+L[-2:] #倒数两个 注意倒过来是第一个元素是-1
+```
+
+
+
+### 迭代
+
+```python
+for ch in 'abc'
+#判断方法
+>>> from collections.abc import Iterable
+>>> isinstance('abc', Iterable) # str是否可迭代
+True
+>>> isinstance([1,2,3], Iterable) # list是否可迭代
+True
+>>> isinstance(123, Iterable) # 整数是否可迭代
+False
+```
+
+
+
+### 列表生成式
+
+```python
+[x*x for x in range(1,4)] #[1,4,9,16]
+#筛选偶数的平方
+>>> [x * x for x in range(1, 11) if x % 2 == 0]
+[4, 16, 36, 64, 100]
+```
+
+
+
 ### 生成器
+
+使用next算出下一个值
+
+编写函数时使用yield返回，调用next时会从yield开始
+
+
 
 第一种方法：
 
@@ -218,154 +439,11 @@ def person(name, age, *args, city, job):
 
 
 
-### 函数式编程
-
-#### 高阶函数
-
-##### map
-
-```python
->>> def f(x):
-...     return x * x
-...
->>> r = map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])
->>> list(r)
-[1, 4, 9, 16, 25, 36, 49, 64, 81]
-```
-
-
-
-##### reduce
-
-```python
->>> from functools import reduce
->>> def add(x, y):
-...     return x + y
-...
->>> reduce(add, [1, 3, 5, 7, 9])
-25
-```
-
-要求add函数接受两个变量
-
-```python
-reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)
-```
-
-
-
-##### filter()
-
-**过滤器**
-
-```python
-def _odd_iter():
-    n=1;
-    while True:
-        n=n+2
-        yield n
-
-def _not_divisible(n):
-    return lambda x:x % n>0
-
-def primes():
-    yield 2
-    it = _odd_iter() # 初始序列
-    while True:
-        n = next(it) # 返回序列的第一个数
-        yield n
-        it = filter(_not_divisible(n), it) # 构造新序列
-
-for n in primes():
-    if n < 1000:
-        print(n)
-    else:
-        break
-```
-
-因为it是一个惰性序列，也是一个无限序列，我们无法在创建时就算出所有的结果
-
-> 那么我们可以理解，filter是可以将判断函数挂起的方法，可以暂时保存`_not_divisiable(n)`这个函数的内容，然后每次next之后会对结果运行这个函数
-
-
-
-##### sort
-
-```python
->>> sorted([36, 5, -12, 9, -21], key=abs)
-[5, 9, -12, -21, 36]
-```
-
-`sort`函数中的`key`函数可以对每一个元素进行操作，之后再排序，比如上面代码中就是将所有元素转换为绝对值后再排序
-
-
-
-##### 返回函数
-
-```python
-def lazy_sum(*args):
-    def sum():
-        ax = 0
-        for n in args:
-            ax = ax + n
-        return ax
-    return sum
-```
-
-> 在这个例子中，我们在函数`lazy_sum`中又定义了函数`sum`，并且，内部函数`sum`可以**引用外部函数`lazy_sum`的参数*和局部变量，当`lazy_sum`返回函数`sum`时，相关参数和变量都保存在返回的函数中，这种称为“闭包（Closure）”的程序结构拥有极大的威力。
-
-**返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量。**
-
-## 高级特性
-
-#### 切片
-
-```python
-L[0:3] #取前三个元素
-L[:3] 	#如果是0可以省略
-L[-2:] #倒数两个 注意倒过来是第一个元素是-1
-```
-
-
-
-#### 迭代
-
-```python
-for ch in 'abc'
-#判断方法
->>> from collections.abc import Iterable
->>> isinstance('abc', Iterable) # str是否可迭代
-True
->>> isinstance([1,2,3], Iterable) # list是否可迭代
-True
->>> isinstance(123, Iterable) # 整数是否可迭代
-False
-```
-
-
-
-#### 列表生成式
-
-```python
-[x*x for x in range(1,4)] #[1,4,9,16]
-#筛选偶数的平方
->>> [x * x for x in range(1, 11) if x % 2 == 0]
-[4, 16, 36, 64, 100]
-```
-
-
-
-#### 生成器
-
-使用next算出下一个值
-
-编写函数时使用yield返回，调用next时会从yield开始
-
 
 
 ## 面向对象编程
 
-#### 类（Class）:
+### 类（Class）
 
 - 类是创建对象的模板或蓝图。它定义了对象的属性（数据）和方法（行为）。
 - 例如，在 Python 中可以通过 `class` 关键字定义一个类：
@@ -381,7 +459,98 @@ False
           print(f"{self.year} {self.make} {self.model}")
   ```
 
-#### 对象（Object）:
+#### 类的生命周期
+
+##### 1. 类的定义
+   - 类的生命周期始于类的定义。在 Python 中，使用 `class` 关键字定义一个类。
+   - 当 Python 解释器遇到 `class` 关键字时，它会创建一个新的类对象，这个对象包含了类的所有方法和属性。
+
+   ```python
+   class MyClass:
+       class_variable = 0  # 类属性
+
+       def __init__(self, value):
+           self.instance_variable = value  # 实例属性
+   ```
+
+##### 2. 类的实例化
+   - 实例化是创建类的对象的过程。这一步涉及调用 `__new__` 方法和 `__init__` 方法。
+
+1. `__new__` 方法
+
+- **职责**：创建对象实例。
+- **调用时机**：在创建对象之前调用。
+- **返回值**：必须返回一个类的实例（通常是通过调用 `super().__new__(cls)` 来获取）。
+- **用法**：主要用于控制类的实例化过程，比如实现单例模式、定制元类等。
+
+`__new__` 是一个类方法，而不是实例方法。它的第一个参数是类本身（通常命名为 `cls`），而不是实例（实例是在 `__new__` 里创建的）。
+
+- **示例**：
+
+```python
+class MyClass:
+    def __new__(cls, *args, **kwargs):
+        print("Calling __new__")
+        instance = super().__new__(cls)
+        return instance
+    
+    def __init__(self, value):
+        print("Calling __init__")
+        self.value = value
+
+obj = MyClass(10)
+```
+
+在这个例子中，`__new__` 在 `__init__` 之前被调用，用于创建对象。
+
+2. `__init__` 方法
+
+- **职责**：初始化对象实例。
+- **调用时机**：在对象创建之后调用（即在 `__new__` 之后）。
+- **返回值**：不需要返回值，它只能返回 `None`。
+- **用法**：用于为对象分配初始属性值。
+
+`__init__` 是一个实例方法，它的第一个参数是实例本身（通常命名为 `self`）。
+
+- **示例**：
+
+```python
+class MyClass:
+    def __new__(cls, *args, **kwargs):
+        instance = super().__new__(cls)
+        return instance
+    
+    def __init__(self, value):
+        print("Calling __init__")
+        self.value = value
+
+obj = MyClass(10)
+```
+
+##### 3. 对象的使用
+   - 创建对象后，你可以访问和修改它的属性，调用它的方法。
+   - 对象会在其生命周期内处理各种任务，并且可能会被其他代码引用或传递。
+
+   ```python
+   print(obj.instance_variable)  # 访问对象属性
+   obj.instance_variable = 20     # 修改对象属性
+   ```
+
+##### 4. 对象的销毁
+   - 当一个对象的引用计数变为 0 时，即不再有任何变量引用它，Python 会自动销毁这个对象。
+   - **`__del__` 方法**：
+     - 如果对象定义了 `__del__` 方法，这个方法将在对象即将被销毁时调用。这个方法通常用于清理资源（例如关闭文件、释放网络连接等）。
+   - 对象的内存会被回收，供未来使用。
+
+   ```python
+   del obj  # 手动删除对象引用
+   ```
+
+##### 5. 垃圾回收
+   - Python 使用垃圾回收机制来管理内存，主要通过引用计数机制。当对象的引用计数为 0 时，垃圾回收器会销毁该对象。
+   - 在某些情况下（例如循环引用），垃圾回收器会通过标记-清除或分代回收来处理这些对象。
+
+### 对象（Object）
 
 - 对象是类的实例。每个对象都有属于自己的属性和方法。
 - 例如，使用上面的 `Car` 类，可以创建一个对象：
@@ -391,12 +560,12 @@ False
   my_car.display_info()  # 输出: 2020 Toyota Corolla
   ```
 
-#### 属性（Attributes）和方法（Methods）:
+### 属性（Attributes）和方法（Methods）
 
 - 属性是对象的数据字段，用来存储对象的状态。方法是对象的函数，用来定义对象的行为。
 - 属性通常在类的 `__init__` 方法中定义，方法是类中定义的函数。
 
-#### 封装（Encapsulation）:
+### 封装（Encapsulation）
 
 - 封装是将对象的状态（属性）和行为（方法）打包在一起的过程，同时对外界隐藏对象的具体实现。
 - 通过使用访问控制（例如私有属性）来限制外部对对象内部状态的直接访问。
@@ -441,9 +610,9 @@ False
 
 ## 函数式编程
 
-#### 高级函数
+### 高级函数
 
-##### map
+#### `map`
 
 ```python
 def f(x):
@@ -455,9 +624,7 @@ def f(x):
 
 map传入两个值，第一个是函数，一个是`Iterable`，最终返回一个`Iterator`
 
-
-
-##### reduce
+#### `reduce`
 
 ```python
 >>> from functools import reduce
@@ -470,23 +637,31 @@ map传入两个值，第一个是函数，一个是`Iterable`，最终返回一�
 
 操作两个数，返回值与下一个数继续操作
 
-
-
-##### filter
+#### `filter`
 
 筛选函数，可以对任何序列进行操作
 
 可以理解为将一个筛选方法加入到对象中，如果是一个`Iterator`则调用next寻找下一个
 
+##### 语法：
 
+以下是 filter() 方法的语法:
 
-##### sorted
+filter(function, iterable)
+
+#### `sorted`
+
+`sorted(iterable, key=None, reverse=False)`
+
+- `iterable`：要排序的可迭代对象。
+- `key`（可选）：一个函数，指定元素的排序依据（即排序键）。默认是 `None`，表示直接对元素进行排序。
+- `reverse`（可选）：布尔值。如果为 `True`，则降序排序；如果为 `False`（默认值），则升序排序。
 
 排序函数，可以加入一个方法决定排序的规则
 
 
 
-#### 返回函数
+### 返回函数
 
 ```python
 >>> f = lazy_sum(1, 3, 5, 7, 9)
@@ -496,6 +671,19 @@ map传入两个值，第一个是函数，一个是`Iterable`，最终返回一�
 25
 ```
 
+```python
+def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+    return sum
+```
+
+> 在这个例子中，我们在函数`lazy_sum`中又定义了函数`sum`，并且，内部函数`sum`可以**引用外部函数`lazy_sum`的参数*和局部变量，当`lazy_sum`返回函数`sum`时，相关参数和变量都保存在返回的函数中，这种称为“闭包（Closure）”的程序结构拥有极大的威力。
+
+**返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量。**
 
 ## 问题与解决
 
